@@ -1,0 +1,61 @@
+package com.example.forkjoin.customthread;
+
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinWorkerThread;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * This class implements a custom thread for the Fork/Join framework. It extends the
+ * ForkJoinWorkerThread that is the default implementation of the threads that executes
+ * the tasks in the Fork/Join Framework. This custom thread counts the number of tasks
+ * executed in it
+ *
+ */
+public class MyWorkerThread extends ForkJoinWorkerThread {
+
+	/**
+	 * ThreadLocal attribute to store the number of tasks executed by each thread
+	 */
+	private final static ThreadLocal<Integer> taskCounter=new ThreadLocal<>();
+	
+	private AtomicInteger atomic = new AtomicInteger(0);
+
+	/**
+	 * Constructor of the class. It calls the constructor of its parent class using the
+	 * super keyword
+	 * @param pool ForkJoinPool where the thread will be executed
+	 */
+	protected MyWorkerThread(ForkJoinPool pool) {
+		super(pool);
+	}
+
+	/**
+	 * This method is called when a worker thread of the Fork/Join framework begins its execution.
+	 * It initializes its task counter
+	 */
+	@Override
+	protected void onStart() {
+		super.onStart();
+		System.out.printf("MyWorkerThread %d: Initializing task counter.\n",getId());
+		taskCounter.set(0);
+	}
+
+	/**
+	 * This method is called when a worker thread of the Fork/Join framework ends its execution.
+	 * It writes in the console the value of the taskCounter attribute.
+	 */
+	@Override
+	protected void onTermination(Throwable exception) {
+		System.out.printf("MyWorkerThread %d: %d -- %d\n",getId(),taskCounter.get(),atomic.get());
+		super.onTermination(exception);
+	}
+	
+	/**
+	 * This method is called for each task to increment the task counter of the worker thread
+	 */
+	public void addTask(){
+		taskCounter.set(taskCounter.get() + 1);;
+		atomic.getAndIncrement();
+	}
+
+}
