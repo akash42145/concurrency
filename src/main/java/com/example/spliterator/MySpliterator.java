@@ -18,12 +18,13 @@ public class MySpliterator implements Spliterator<Item> {
 	@Override
 	public int characteristics() {
 		System.out.printf("MySpliterator.characteristics.\n");
+		
 		return ORDERED | SIZED | SUBSIZED;
 	}
 
 	@Override
 	public long estimateSize() {
-		System.out.printf("MySpliterator.estimateSize.\n");
+		System.out.printf("MySpliterator.estimateSize."+(end - current)+" \n");
 		return end - current;
 	}
 
@@ -55,7 +56,7 @@ public class MySpliterator implements Spliterator<Item> {
 	
 	@Override
 	public Spliterator<Item> trySplit() {
-		System.out.printf("MySpliterator.trySplit.start\n");
+		System.out.printf(Thread.currentThread().getName()+ " :: MySpliterator.trySplit.start: %d, %d\n ",start, end);
 
 		if (end-start<=2) {
 			System.out.printf("MySpliterator.trySplit.end\n");
@@ -65,7 +66,7 @@ public class MySpliterator implements Spliterator<Item> {
 		int newStart=mid;
 		int newEnd=end;
 		end=mid;
-		System.out.printf("MySpliterator.trySplit.end: %d, %d, %d, %d, %d, %d\n",start, mid, end, newStart, newEnd, current);
+		System.out.printf(Thread.currentThread().getName()+" ::MySpliterator.trySplit.end: %d, %d, %d, %d, %d, %d\n",start, mid, end, newStart, newEnd, current);
 
 		return new MySpliterator(items, newStart, newEnd);
 	}

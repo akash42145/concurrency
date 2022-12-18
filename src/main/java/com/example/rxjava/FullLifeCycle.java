@@ -22,6 +22,8 @@ public class FullLifeCycle
             emitter.onComplete();
             //emitter.onError(new Exception("Noooooooooooooooo! I've lost an arm"));
         }, BackpressureStrategy.MISSING);
+        
+       // messages.subscribe(System.out::println);
 
         messages.subscribe(new Subscriber<String>()
         {

@@ -19,7 +19,7 @@ public class NonStreamOperations
         final Flowable<Integer> left = Flowable.fromArray(1, 2, 3);
         final Flowable<Integer> right = Flowable.fromArray(4, -5, 6);
 
-        /*Flowable
+      Flowable
             .fromArray(Tracks.allTracks)
             .doOnNext(System.out::println)
             .all(track -> track.getLengthInSeconds() > 300)
@@ -27,7 +27,7 @@ public class NonStreamOperations
 
         System.out.println();
 
-        Flowable
+       /* Flowable
             .fromArray(Tracks.allTracks)
             .contains(Tracks.stairwayToHeaven)
             .subscribe(System.out::println);

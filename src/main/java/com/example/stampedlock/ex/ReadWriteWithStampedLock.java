@@ -1,4 +1,4 @@
-package com.example.stampedlock;
+package com.example.stampedlock.ex;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;

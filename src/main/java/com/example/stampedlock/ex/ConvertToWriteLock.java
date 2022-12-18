@@ -1,4 +1,4 @@
-package com.example.stampedlock;
+package com.example.stampedlock.ex;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

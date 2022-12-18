@@ -32,11 +32,18 @@ public class CompletableFutureExample {
 			return 3 + s;
 		}));
 		
+		cf.thenRun(() -> System.out.println("Logger......................!!!"));
+		
+		CompletableFuture<Integer> finalCf = cf.thenComposeAsync(s -> CompletableFuture.supplyAsync(() -> {
+			System.out.println("Start executing 4rd Service with previous result "+ s);
+			calculation(3);
+			return 3 + s;
+		}));
 		
 		System.out.println("NOT EXECUTED YET");
 		Thread.sleep(1000);
 		
-		return cf.join();
+		return finalCf.join();
 		
 	}
 
